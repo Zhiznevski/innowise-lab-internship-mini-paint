@@ -1,37 +1,50 @@
 import { Button, Card, CardContent, Link, TextField, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { REGISTRATION_ROUTE } from '../../utils/constants/routes';
-import { useForm } from 'react-hook-form';
+import { LOGIN_ROUTE } from '../../utils/constants/routes';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface FormValues {
+  username: string;
   email: string;
   password: string;
 }
 
-function LoginForm() {
+function RegisterForm() {
   const { register, handleSubmit } = useForm<FormValues>({
     defaultValues: {
+      username: '',
       email: '',
       password: '',
     },
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
   };
   return (
     <Card>
       <CardContent>
         <Typography sx={{ marginBottom: 2 }} variant="h5">
-          Login
+          Signup
         </Typography>
         <Typography sx={{ marginBottom: 3 }} variant="body2">
-          Don`t have an account?
-          <Link sx={{ marginLeft: 1 }} component={RouterLink} to={REGISTRATION_ROUTE}>
-            SIGN UP
+          Already have an account?
+          <Link sx={{ marginLeft: 1 }} component={RouterLink} to={LOGIN_ROUTE}>
+            LOGIN
           </Link>
         </Typography>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            {...register('username')}
+            error={false}
+            helperText="Please enter your name"
+            id="username-input"
+            label="Username"
+            variant="outlined"
+            size="small"
+            margin="dense"
+            fullWidth
+          />
           <TextField
             {...register('email')}
             error={false}
@@ -55,11 +68,11 @@ function LoginForm() {
             fullWidth
           />
           <Button type="submit" sx={{ marginTop: 3 }} fullWidth variant="contained" size="large">
-            login
+            Sign Up
           </Button>
         </form>
       </CardContent>
     </Card>
   );
 }
-export default LoginForm;
+export default RegisterForm;
