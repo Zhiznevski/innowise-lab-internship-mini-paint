@@ -1,4 +1,11 @@
+import Container from '@mui/material/Container';
+import LoginForm from '../../components/LoginForm/LoginForm';
+
 function LoginPage() {
-  return <div>Login</div>;
+  return (
+    <Container maxWidth="xs">
+      <LoginForm />
+    </Container>
+  );
 }
 export default LoginPage;
