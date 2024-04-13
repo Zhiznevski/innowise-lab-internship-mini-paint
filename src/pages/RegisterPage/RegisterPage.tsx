@@ -6,6 +6,7 @@ import {
   registerValidationSchema,
 } from '../../utils/validation/schema';
 import Form from '../../components/Form/Form';
+import { firebaseConfig } from '../../utils/firebase/config';
 
 const formInfo = {
   title: 'Signup',
@@ -24,7 +25,7 @@ function RegisterPage() {
     resolver: yupResolver<RegisterValidationSchemaType>(registerValidationSchema),
     mode: 'onBlur',
   });
-
+  console.log(firebaseConfig);
   const onSubmit: SubmitHandler<RegisterValidationSchemaType> = (data) => {
     console.log(data);
   };
