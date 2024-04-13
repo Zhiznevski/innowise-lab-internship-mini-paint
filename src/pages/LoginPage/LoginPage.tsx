@@ -32,6 +32,7 @@ function LoginPage() {
         <Form formInfo={formInfo}>
           <TextField
             {...register('email')}
+            aria-invalid={!!errors.email}
             error={!!errors.email?.message}
             helperText={errors.email?.message ?? ' '}
             id="email-input"
@@ -43,6 +44,7 @@ function LoginPage() {
           />
           <TextField
             {...register('password')}
+            aria-invalid={!!errors.password}
             error={!!errors.password?.message}
             helperText={errors.password?.message ?? ' '}
             id="password-input"

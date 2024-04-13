@@ -35,6 +35,7 @@ function RegisterPage() {
         <Form formInfo={formInfo}>
           <TextField
             {...register('username')}
+            aria-invalid={!!errors.username}
             error={!!errors.username?.message}
             helperText={errors.username?.message ?? ' '}
             id="username-input"
@@ -46,6 +47,7 @@ function RegisterPage() {
           />
           <TextField
             {...register('email')}
+            aria-invalid={!!errors.email}
             error={!!errors.email?.message}
             helperText={errors.email?.message ?? ' '}
             id="email-input"
@@ -57,6 +59,7 @@ function RegisterPage() {
           />
           <TextField
             {...register('password')}
+            aria-invalid={!!errors.password}
             error={!!errors.password?.message}
             helperText={errors.password?.message ?? ' '}
             id="password-input"
