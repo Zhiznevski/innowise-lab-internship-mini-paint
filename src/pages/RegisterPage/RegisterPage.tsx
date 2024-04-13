@@ -6,7 +6,7 @@ import {
   registerValidationSchema,
 } from '../../utils/validation/schema';
 import Form from '../../components/Form/Form';
-import { firebaseConfig } from '../../utils/firebase/config';
+import { firebaseConfig } from '../../services/firebase/config';
 
 const formInfo = {
   title: 'Signup',
