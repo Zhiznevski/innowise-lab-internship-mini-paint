@@ -1,4 +1,4 @@
-import { Button, Container, IconButton, Snackbar, TextField } from '@mui/material';
+import { Button, Container, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -7,7 +7,7 @@ import Form from '../../components/Form/Form';
 import { auth } from '../../services/firebase/config';
 import { logInWithEmailAndPassword } from '../../services/firebase/Auth.service';
 import { useState } from 'react';
-// import CloseIcon from '@mui/icons-material/Close';
+import Notification from '../../components/Notification/Notification';
 
 const formInfo = {
   title: 'Login',
@@ -80,17 +80,9 @@ function LoginPage() {
           </Button>
         </Form>
       </form>
-      <Snackbar
-        open={isModalOpen}
-        onClose={closeModal}
-        autoHideDuration={5000}
-        message="Note archived"
-        action={
-          <IconButton aria-label="close" color="inherit" sx={{ p: 0.5 }} onClick={closeModal}>
-            {/* <CloseIcon /> */}
-          </IconButton>
-        }
-      />
+      <Notification onClose={closeModal} isOpen={isModalOpen}>
+        Invalid authorization data
+      </Notification>
     </Container>
   );
 }
