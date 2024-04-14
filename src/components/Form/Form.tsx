@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Link, Typography } from '@mui/material';
+import { Card, CardContent, Link, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -8,7 +8,6 @@ interface FormType {
     Subtitle: string;
     navigateRoute: string;
     navigateLinkText: string;
-    submitText: string;
   };
   children: ReactNode;
 }
@@ -27,9 +26,6 @@ function Form({ formInfo, children }: FormType) {
           </Link>
         </Typography>
         {children}
-        <Button type="submit" sx={{ marginTop: 3 }} fullWidth variant="contained" size="large">
-          {formInfo.submitText}
-        </Button>
       </CardContent>
     </Card>
   );

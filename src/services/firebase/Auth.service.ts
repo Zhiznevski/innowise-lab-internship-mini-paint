@@ -7,10 +7,15 @@ import {
 import { auth, db } from './config';
 import { addDoc, collection } from 'firebase/firestore';
 
-export const logInWithEmailAndPassword = async (email: string, password: string) => {
+export const logInWithEmailAndPassword = async (
+  email: string,
+  password: string,
+  callback: () => void
+) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
+    callback();
     console.error(err);
   }
 };

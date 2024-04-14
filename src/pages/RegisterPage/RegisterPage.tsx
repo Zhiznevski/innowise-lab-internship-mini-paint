@@ -1,4 +1,4 @@
-import { Container, TextField } from '@mui/material';
+import { Button, Container, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
@@ -6,17 +6,17 @@ import {
   registerValidationSchema,
 } from '../../utils/validation/schema';
 import Form from '../../components/Form/Form';
-import { firebaseConfig } from '../../services/firebase/config';
+import { registerWithEmailAndPassword } from '../../services/firebase/Auth.service';
 
 const formInfo = {
   title: 'Signup',
   Subtitle: 'Already have an account?',
   navigateRoute: '/login',
   navigateLinkText: 'LOGIN',
-  submitText: 'Sign Up',
 };
 
 function RegisterPage() {
+  // const [user, loading, error] = useAuthState(auth);
   const {
     register,
     handleSubmit,
@@ -25,9 +25,9 @@ function RegisterPage() {
     resolver: yupResolver<RegisterValidationSchemaType>(registerValidationSchema),
     mode: 'onBlur',
   });
-  console.log(firebaseConfig);
-  const onSubmit: SubmitHandler<RegisterValidationSchemaType> = (data) => {
-    console.log(data);
+
+  const onSubmit: SubmitHandler<RegisterValidationSchemaType> = async (data) => {
+    await registerWithEmailAndPassword(data.username, data.email, data.password);
   };
 
   return (
@@ -70,6 +70,18 @@ function RegisterPage() {
             margin="dense"
             fullWidth
           />
+          <Button
+            disabled={
+              !!errors.password?.message || !!errors.email?.message || !!errors.username?.message
+            }
+            type="submit"
+            sx={{ marginTop: 3 }}
+            fullWidth
+            variant="contained"
+            size="large"
+          >
+            Sign Up
+          </Button>
         </Form>
       </form>
     </Container>
