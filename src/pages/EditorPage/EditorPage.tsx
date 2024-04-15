@@ -1,4 +1,10 @@
+import Canvas from '../../components/Canvas/Canvas';
+
 function EditorPage() {
-  return <div>EditorPage</div>;
+  return (
+    <div>
+      <Canvas />
+    </div>
+  );
 }
 export default EditorPage;

@@ -22,11 +22,11 @@ const router = createBrowserRouter([
         path: HOME_ROUTE,
         element: <FeedPage />,
       },
-      {
-        path: EDITOR_ROUTE,
-        element: <EditorPage />,
-      },
     ],
+  },
+  {
+    path: EDITOR_ROUTE,
+    element: <EditorPage />,
   },
   {
     path: LOGIN_ROUTE,
