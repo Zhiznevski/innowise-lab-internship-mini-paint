@@ -6,8 +6,10 @@ import { LoginValidationSchemaType, loginValidationSchema } from '../../utils/va
 import Form from '../../components/Form/Form';
 import { auth } from '../../services/firebase/config';
 import { logInWithEmailAndPassword } from '../../services/firebase/Auth.service';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Notification from '../../components/Notification/Notification';
+import { useNavigate } from 'react-router-dom';
+import { HOME_ROUTE } from '../../utils/constants/routes';
 
 const formInfo = {
   title: 'Login',
@@ -17,8 +19,9 @@ const formInfo = {
 };
 
 function LoginPage() {
-  const [error] = useAuthState(auth);
+  const [user, error] = useAuthState(auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   console.log(error);
 
   const {
@@ -39,6 +42,12 @@ function LoginPage() {
   const onSubmit: SubmitHandler<LoginValidationSchemaType> = async (data) => {
     await logInWithEmailAndPassword(data.email, data.password, openModal);
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(HOME_ROUTE);
+    }
+  }, [user, navigate]);
 
   return (
     <Container maxWidth="xs">
