@@ -4,9 +4,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/firebase/config';
 import { useEffect } from 'react';
 import { LOGIN_ROUTE } from '../../utils/constants/routes';
+import { CircularProgress } from '@mui/material';
 
 function RootPage() {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
   useEffect(() => {
     if (!user) {
@@ -14,6 +15,9 @@ function RootPage() {
     }
   }, [user, navigate]);
 
+  if (loading) {
+    return <CircularProgress />;
+  }
   return (
     <>
       <Header user={user} />

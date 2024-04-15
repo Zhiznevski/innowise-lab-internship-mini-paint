@@ -6,6 +6,7 @@ import { Logout } from '@mui/icons-material';
 interface HeaderPropsType {
   user: User | null | undefined;
 }
+
 function Header({ user }: HeaderPropsType) {
   const logoutHandleClick = async () => {
     await logout();

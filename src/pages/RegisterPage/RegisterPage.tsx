@@ -1,4 +1,4 @@
-import { Button, Container, TextField } from '@mui/material';
+import { Button, CircularProgress, Container, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
@@ -22,7 +22,7 @@ const formInfo = {
 };
 
 function RegisterPage() {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const {
@@ -52,6 +52,9 @@ function RegisterPage() {
     }
   }, [user, navigate]);
 
+  if (loading) {
+    return <CircularProgress />;
+  }
   return (
     <Container maxWidth="xs">
       <form noValidate onSubmit={handleSubmit(onSubmit)}>

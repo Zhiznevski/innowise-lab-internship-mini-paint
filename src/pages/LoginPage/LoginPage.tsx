@@ -1,4 +1,4 @@
-import { Button, Container, TextField } from '@mui/material';
+import { Button, CircularProgress, Container, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -19,7 +19,7 @@ const formInfo = {
 };
 
 function LoginPage() {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -47,6 +47,10 @@ function LoginPage() {
       navigate(HOME_ROUTE);
     }
   }, [user, navigate]);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   return (
     <Container maxWidth="xs">
