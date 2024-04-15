@@ -23,7 +23,8 @@ export const logInWithEmailAndPassword = async (
 export const registerWithEmailAndPassword = async (
   name: string,
   email: string,
-  password: string
+  password: string,
+  callback: () => void
 ) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -35,6 +36,7 @@ export const registerWithEmailAndPassword = async (
       email,
     });
   } catch (err) {
+    callback();
     console.error(err);
   }
 };

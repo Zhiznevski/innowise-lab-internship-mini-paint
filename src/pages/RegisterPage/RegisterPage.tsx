@@ -7,6 +7,12 @@ import {
 } from '../../utils/validation/schema';
 import Form from '../../components/Form/Form';
 import { registerWithEmailAndPassword } from '../../services/firebase/Auth.service';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../services/firebase/config';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { HOME_ROUTE } from '../../utils/constants/routes';
+import Notification from '../../components/Notification/Notification';
 
 const formInfo = {
   title: 'Signup',
@@ -16,7 +22,9 @@ const formInfo = {
 };
 
 function RegisterPage() {
-  // const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -26,9 +34,23 @@ function RegisterPage() {
     mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<RegisterValidationSchemaType> = async (data) => {
-    await registerWithEmailAndPassword(data.username, data.email, data.password);
+  const openModal = () => {
+    setIsModalOpen(true);
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onSubmit: SubmitHandler<RegisterValidationSchemaType> = async (data) => {
+    await registerWithEmailAndPassword(data.username, data.email, data.password, () => openModal());
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigate(HOME_ROUTE);
+    }
+  }, [user, navigate]);
 
   return (
     <Container maxWidth="xs">
@@ -84,6 +106,9 @@ function RegisterPage() {
           </Button>
         </Form>
       </form>
+      <Notification onClose={closeModal} isOpen={isModalOpen}>
+        Email is already in use
+      </Notification>
     </Container>
   );
 }

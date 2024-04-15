@@ -19,10 +19,9 @@ const formInfo = {
 };
 
 function LoginPage() {
-  const [user, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  console.log(error);
 
   const {
     register,
@@ -40,7 +39,7 @@ function LoginPage() {
   };
 
   const onSubmit: SubmitHandler<LoginValidationSchemaType> = async (data) => {
-    await logInWithEmailAndPassword(data.email, data.password, openModal);
+    await logInWithEmailAndPassword(data.email, data.password, () => openModal());
   };
 
   useEffect(() => {

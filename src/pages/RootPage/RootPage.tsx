@@ -8,7 +8,6 @@ import { LOGIN_ROUTE } from '../../utils/constants/routes';
 function RootPage() {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
-  if (!user) navigate(LOGIN_ROUTE);
   useEffect(() => {
     if (!user) {
       navigate(LOGIN_ROUTE);
