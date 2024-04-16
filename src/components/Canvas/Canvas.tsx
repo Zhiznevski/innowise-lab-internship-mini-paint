@@ -1,46 +1,22 @@
 import { Box, Button } from '@mui/material';
-import { useEffect, useRef } from 'react';
-
-interface CanvasPropstype {
-  width: number;
-  height: number;
-}
+import useCanvas from './useCanvas';
 
 export const URL =
-  'https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?ixid=2yJhcHBfaWQiOjEyMDd9&fm=jpg&w=200&fit=max';
+  'https://cors-anywhere.herokuapp.com/https://i.pinimg.com/564x/ed/a8/e2/eda8e26c050995c78c432709c165e69f.jpg';
 
-function Canvas({ width = 500, height = 500 }: CanvasPropstype) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  const clearCanvas = (ctx: CanvasRenderingContext2D) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  };
-
-  const clearButtonHandler = () => {
-    const ctx = canvasRef.current?.getContext('2d');
-    if (ctx) {
-      clearCanvas(ctx);
-    }
-  };
-  useEffect(() => {
-    const ctx = canvasRef.current?.getContext('2d');
-    if (ctx) {
-      const img = new Image();
-      img.onload = function () {
-        ctx.drawImage(img, 0, 0, 500, 500);
-      };
-    }
-  }, []);
+function Canvas() {
+  const { canvasRef, clearCanvas, eventHandlers } = useCanvas();
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <canvas
           ref={canvasRef}
-          style={{ background: '#fff' }}
-          height={height}
-          width={width}
+          style={{ background: '#fff', cursor: 'crosshair', position: 'relative', top: 0, left: 0 }}
+          onMouseDown={eventHandlers.startDrawing}
+          onMouseUp={eventHandlers.finishDrawing}
+          onMouseMove={eventHandlers.draw}
         ></canvas>
-        <Button onClick={clearButtonHandler} variant="contained">
+        <Button onClick={clearCanvas} variant="contained">
           clear
         </Button>
       </Box>
