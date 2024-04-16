@@ -1,8 +1,8 @@
 import {
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from 'firebase/auth';
 import { auth, db } from './config';
 import { addDoc, collection } from 'firebase/firestore';
@@ -13,7 +13,7 @@ export const logInWithEmailAndPassword = async (
   callback: () => void
 ) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    await signInWithEmailAndPassword(auth, email, password).then((user) => console.log(user));
   } catch (err) {
     callback();
     console.error(err);
@@ -35,17 +35,9 @@ export const registerWithEmailAndPassword = async (
       authProvider: 'local',
       email,
     });
+    await updateProfile(user, { displayName: name });
   } catch (err) {
     callback();
-    console.error(err);
-  }
-};
-
-export const sendPasswordReset = async (email: string) => {
-  try {
-    await sendPasswordResetEmail(auth, email);
-    alert('Password reset link sent!');
-  } catch (err) {
     console.error(err);
   }
 };
