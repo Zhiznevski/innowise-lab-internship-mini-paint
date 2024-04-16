@@ -6,44 +6,11 @@ interface CanvasPropstype {
   height: number;
 }
 
+export const URL =
+  'https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?ixid=2yJhcHBfaWQiOjEyMDd9&fm=jpg&w=200&fit=max';
+
 function Canvas({ width = 500, height = 500 }: CanvasPropstype) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const drawLine = (
-    ctx: CanvasRenderingContext2D,
-    startX: number,
-    startY: number,
-    endX: number,
-    endY: number
-  ) => {
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.lineTo(endX, endY);
-    ctx.stroke();
-  };
-
-  const drawCircle = (
-    ctx: CanvasRenderingContext2D,
-    startX: number,
-    startY: number,
-    radius: number,
-    startAngle: number,
-    endAngle: number,
-    counterclockwise?: boolean | undefined
-  ) => {
-    ctx.beginPath();
-    ctx.arc(startX, startY, radius, startAngle, endAngle, counterclockwise);
-    ctx.stroke();
-  };
-
-  const drawRect = (
-    ctx: CanvasRenderingContext2D,
-    startX: number,
-    startY: number,
-    width: number,
-    height: number
-  ) => {
-    ctx.fillRect(startX, startY, width, height);
-  };
 
   const clearCanvas = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -58,9 +25,10 @@ function Canvas({ width = 500, height = 500 }: CanvasPropstype) {
   useEffect(() => {
     const ctx = canvasRef.current?.getContext('2d');
     if (ctx) {
-      drawLine(ctx, 100, 10, 10, 10);
-      drawCircle(ctx, 100, 10, 10, 0, 0);
-      drawRect(ctx, 100, 10, 10, 10);
+      const img = new Image();
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0, 500, 500);
+      };
     }
   }, []);
   return (
