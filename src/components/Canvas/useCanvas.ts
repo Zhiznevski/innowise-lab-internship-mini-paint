@@ -30,10 +30,8 @@ function useCanvas(lineColor = 'black', lineWidth = 5) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      canvas.width = 600;
+      canvas.height = 900;
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.lineWidth = lineWidth;

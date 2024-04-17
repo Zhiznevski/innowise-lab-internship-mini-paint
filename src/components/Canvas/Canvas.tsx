@@ -11,6 +11,8 @@ function Canvas() {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <canvas
           ref={canvasRef}
+          height={900}
+          width={650}
           style={{ background: '#fff', cursor: 'crosshair', position: 'relative', top: 0, left: 0 }}
           onMouseDown={eventHandlers.mouseDownHandler}
           onMouseUp={eventHandlers.mouseUpHandler}

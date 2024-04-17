@@ -7,21 +7,25 @@ function applyBrush(
   const { isMouseDown, setIsMouseDown } = mouseDownState;
 
   const mouseDownHandler = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-    const { clientX, clientY } = e;
+    if (e.buttons !== 1) return;
     setIsMouseDown(true);
     contextRef.current?.beginPath();
-    contextRef.current?.moveTo(clientX, clientY);
+    contextRef.current?.moveTo(
+      e.pageX - e.currentTarget.offsetLeft,
+      e.pageY - e.currentTarget.offsetTop
+    );
   };
 
   const mouseUpHandler = () => {
-    contextRef.current?.closePath();
     setIsMouseDown(false);
   };
 
   const mouseMoveHandler = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     if (!isMouseDown) return;
-    const { clientX, clientY } = e;
-    contextRef.current?.lineTo(clientX, clientY);
+    contextRef.current?.lineTo(
+      e.pageX - e.currentTarget.offsetLeft,
+      e.pageY - e.currentTarget.offsetTop
+    );
     contextRef.current?.stroke();
   };
 

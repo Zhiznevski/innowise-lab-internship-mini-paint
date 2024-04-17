@@ -1,6 +1,6 @@
 import { MouseDownStateProps, SnapshotStateProps, StartCoordsStateProps } from './chooseTool';
 
-function applyLine(
+function applyRect(
   contextRef: React.MutableRefObject<CanvasRenderingContext2D | null>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
   mouseDownState: MouseDownStateProps,
@@ -13,6 +13,7 @@ function applyLine(
 
   const mouseDownHandler = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const { clientX, clientY } = e;
+    if (e.buttons !== 1) return;
     setIsMouseDown(true);
     setStartCoords({ startX: clientX, startY: clientY });
     contextRef.current?.beginPath();
@@ -65,4 +66,4 @@ function applyLine(
   return { contextWithTool, eventHandlers };
 }
 
-export default applyLine;
+export default applyRect;
