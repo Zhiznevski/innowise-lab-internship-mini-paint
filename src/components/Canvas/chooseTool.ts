@@ -1,6 +1,8 @@
 import { Coordinates } from './useCanvas';
 import applyLine from './applyLine';
 import applyBrush from './applyBrush';
+import applyRect from './applyRect';
+import applyCircle from './applyCircle';
 
 export interface MouseDownStateProps {
   isMouseDown: boolean;
@@ -30,6 +32,26 @@ function chooseTool(
     }
     case 'line': {
       const { contextWithTool, eventHandlers } = applyLine(
+        context,
+        canvasRef,
+        mouseDownState,
+        startCoordsState,
+        snapshotState
+      );
+      return { contextWithTool, eventHandlers };
+    }
+    case 'rect': {
+      const { contextWithTool, eventHandlers } = applyRect(
+        context,
+        canvasRef,
+        mouseDownState,
+        startCoordsState,
+        snapshotState
+      );
+      return { contextWithTool, eventHandlers };
+    }
+    case 'circle': {
+      const { contextWithTool, eventHandlers } = applyCircle(
         context,
         canvasRef,
         mouseDownState,

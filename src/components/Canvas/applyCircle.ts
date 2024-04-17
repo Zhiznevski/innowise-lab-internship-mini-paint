@@ -1,6 +1,6 @@
 import { MouseDownStateProps, SnapshotStateProps, StartCoordsStateProps } from './chooseTool';
 
-function applyRect(
+function applyCircle(
   contextRef: React.MutableRefObject<CanvasRenderingContext2D | null>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
   mouseDownState: MouseDownStateProps,
@@ -42,12 +42,11 @@ function applyRect(
               canvasRef.current.height
             );
             contextRef.current?.beginPath();
-            contextRef.current?.rect(
-              startCoods.startX,
-              startCoods.startY,
-              e.pageX - target.offsetLeft - startCoods.startX,
-              e.pageY - target.offsetTop - startCoods.startY
+            const radius = Math.sqrt(
+              (e.pageX - target.offsetLeft - startCoods.startX) ** 2 +
+                (e.pageY - target.offsetTop - startCoods.startY) ** 2
             );
+            contextRef.current?.arc(startCoods.startX, startCoods.startY, radius, 0, Math.PI * 2);
             contextRef.current?.stroke();
           }
         };
@@ -65,4 +64,4 @@ function applyRect(
   return { contextWithTool, eventHandlers };
 }
 
-export default applyRect;
+export default applyCircle;

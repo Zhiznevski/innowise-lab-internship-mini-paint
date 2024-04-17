@@ -13,7 +13,7 @@ function useCanvas(lineColor = 'black', lineWidth = 5) {
   const [startCoods, setStartCoords] = useState<Coordinates>({ startX: 0, startY: 0 });
   const [snapshot, setSnapshot] = useState<string | undefined>('');
   const { contextWithTool, eventHandlers } = chooseTool(
-    'brush',
+    'circle',
     contextRef,
     canvasRef,
     { isMouseDown, setIsMouseDown },
