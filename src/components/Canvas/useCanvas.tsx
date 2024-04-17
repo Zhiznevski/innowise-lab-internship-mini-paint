@@ -1,39 +1,30 @@
 import { useEffect, useRef, useState } from 'react';
+import chooseTool from './chooseTool';
+
+export interface Coordinates {
+  startX: number;
+  startY: number;
+}
 
 function useCanvas(lineColor = 'black', lineWidth = 5) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-    const { clientX, clientY } = e;
-    setIsDrawing(true);
-    contextRef.current?.beginPath();
-    contextRef.current?.moveTo(clientX, clientY);
-  };
-
-  const finishDrawing = () => {
-    contextRef.current?.closePath();
-    setIsDrawing(false);
-  };
-
-  const draw = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-    if (!isDrawing) return;
-    const { clientX, clientY } = e;
-    contextRef.current?.lineTo(clientX, clientY);
-    contextRef.current?.stroke();
-  };
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [startCoods, setStartCoords] = useState<Coordinates>({ startX: 0, startY: 0 });
+  const [snapshot, setSnapshot] = useState<string | undefined>('');
+  const { contextWithTool, eventHandlers } = chooseTool(
+    'brush',
+    contextRef,
+    canvasRef,
+    { isMouseDown, setIsMouseDown },
+    { startCoods, setStartCoords },
+    { snapshot, setSnapshot }
+  );
 
   const clearCanvas = () => {
-    if (contextRef.current && canvasRef.current) {
-      contextRef.current.clearRect(0, 0, canvasRef.current?.width, canvasRef.current?.height);
+    if (contextWithTool.current && canvasRef.current) {
+      contextWithTool.current.clearRect(0, 0, canvasRef.current?.width, canvasRef.current?.height);
     }
-  };
-
-  const eventHandlers = {
-    startDrawing,
-    finishDrawing,
-    draw,
   };
 
   useEffect(() => {
@@ -48,9 +39,9 @@ function useCanvas(lineColor = 'black', lineWidth = 5) {
         ctx.lineWidth = lineWidth;
         ctx.strokeStyle = lineColor;
       }
-      contextRef.current = ctx;
+      contextWithTool.current = ctx;
     }
-  }, [lineColor, lineWidth]);
+  }, [lineColor, lineWidth, contextWithTool]);
 
   return { canvasRef, clearCanvas, eventHandlers };
 }

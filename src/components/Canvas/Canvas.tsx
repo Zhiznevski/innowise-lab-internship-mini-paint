@@ -12,9 +12,9 @@ function Canvas() {
         <canvas
           ref={canvasRef}
           style={{ background: '#fff', cursor: 'crosshair', position: 'relative', top: 0, left: 0 }}
-          onMouseDown={eventHandlers.startDrawing}
-          onMouseUp={eventHandlers.finishDrawing}
-          onMouseMove={eventHandlers.draw}
+          onMouseDown={eventHandlers.mouseDownHandler}
+          onMouseUp={eventHandlers.mouseUpHandler}
+          onMouseMove={eventHandlers.mouseMoveHandler}
         ></canvas>
         <Button onClick={clearCanvas} variant="contained">
           clear
