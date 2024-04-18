@@ -6,32 +6,45 @@ import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
 import Crop54Icon from '@mui/icons-material/Crop54';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import { HOME_ROUTE } from '../../utils/constants/routes';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { setToolValue } from '../../store/toolSlice';
+import { Tools } from '../../utils/constants/tools';
 
 const iconElements = [
   {
     id: 0,
-    name: 'brush',
+    name: Tools.brush,
     element: <BrushIcon />,
   },
   {
     id: 1,
-    name: 'circle',
+    name: Tools.circle,
     element: <PanoramaFishEyeIcon />,
   },
   {
     id: 2,
-    name: 'rect',
-    element: <HorizontalRuleIcon />,
+    name: Tools.rect,
+    element: <Crop54Icon />,
   },
   {
     id: 3,
-    name: 'line',
-    element: <Crop54Icon />,
+    name: Tools.line,
+    element: <HorizontalRuleIcon />,
   },
 ];
 
-const drawerWidth = 65;
+const itemStyles = {
+  buttonHover: 'rgba(0, 0, 0, 0.1)',
+  iconActive: '#2e7d32',
+};
+
+const drawerWidth = 60;
+
 function ToolsPanel() {
+  const tool = useAppSelector((state) => state.tool.toolValue);
+  console.log(tool);
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <Drawer
@@ -41,6 +54,7 @@ function ToolsPanel() {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            overflowX: 'hidden',
           },
         }}
         variant="permanent"
@@ -49,7 +63,7 @@ function ToolsPanel() {
         <List>
           <Link sx={{ marginLeft: 1 }} component={RouterLink} to={HOME_ROUTE}>
             <ListItem disablePadding>
-              <ListItemButton onClick={(e) => console.log(e)}>
+              <ListItemButton>
                 <ListItemIcon>
                   <HomeIcon color="primary" />
                 </ListItemIcon>
@@ -58,7 +72,10 @@ function ToolsPanel() {
           </Link>
           {iconElements.map((element) => (
             <ListItem key={element.id} disablePadding>
-              <ListItemButton sx={{}} onClick={(e) => console.log(e)}>
+              <ListItemButton
+                sx={{ backgroundColor: tool === element.name ? itemStyles.buttonHover : '' }}
+                onClick={() => dispatch(setToolValue(element.name))}
+              >
                 <ListItemIcon>{element.element}</ListItemIcon>
               </ListItemButton>
             </ListItem>

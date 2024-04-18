@@ -1,11 +1,14 @@
 import { Box, Button } from '@mui/material';
 import useCanvas from './useCanvas';
+import { useAppSelector } from '../../store/store';
 
 export const URL =
   'https://cors-anywhere.herokuapp.com/https://i.pinimg.com/564x/ed/a8/e2/eda8e26c050995c78c432709c165e69f.jpg';
 
 function Canvas() {
-  const { canvasRef, clearCanvas, eventHandlers } = useCanvas();
+  const tool = useAppSelector((state) => state.tool.toolValue);
+
+  const { canvasRef, clearCanvas, eventHandlers } = useCanvas('black', 5, tool);
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

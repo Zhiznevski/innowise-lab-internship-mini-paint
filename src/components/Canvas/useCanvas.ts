@@ -1,22 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { Tools } from '../../utils/constants/tools';
 
 interface Coordinates {
   startX: number;
   startY: number;
 }
 
-enum Tools {
-  brush = 'brush',
-  line = 'line',
-  rect = 'rect',
-  circle = 'circle',
-}
-
-type ToolType = keyof typeof Tools;
-
 const LEFT_MOUSE_BUTTON_NUMBER = 1;
 
-function useCanvas(lineColor = 'black', lineWidth = 5, currentTool: ToolType = 'brush') {
+function useCanvas(lineColor = 'black', lineWidth = 5, currentTool = Tools.brush) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const [isMouseDown, setIsMouseDown] = useState(false);
