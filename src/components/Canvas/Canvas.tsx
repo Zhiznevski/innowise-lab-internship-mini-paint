@@ -11,14 +11,21 @@ function Canvas() {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <canvas
           ref={canvasRef}
-          height={900}
-          width={650}
-          style={{ background: '#fff', cursor: 'crosshair', position: 'relative', top: 0, left: 0 }}
+          height={800}
+          width={600}
+          style={{
+            background: '#fff',
+            border: '1px solid rgba(0, 0, 0, 0.12)',
+            cursor: 'crosshair',
+            position: 'relative',
+            top: 0,
+            left: 0,
+          }}
           onMouseDown={eventHandlers.mouseDownHandler}
           onMouseUp={eventHandlers.mouseUpHandler}
           onMouseMove={eventHandlers.mouseMoveHandler}
         ></canvas>
-        <Button onClick={clearCanvas} variant="contained">
+        <Button onClick={clearCanvas} variant="contained" sx={{ marrginTop: 5 }}>
           clear
         </Button>
       </Box>

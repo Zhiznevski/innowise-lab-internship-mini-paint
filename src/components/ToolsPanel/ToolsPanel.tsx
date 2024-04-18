@@ -7,8 +7,30 @@ import Crop54Icon from '@mui/icons-material/Crop54';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import { HOME_ROUTE } from '../../utils/constants/routes';
 
-const drawerWidth = 65;
+const iconElements = [
+  {
+    id: 0,
+    name: 'brush',
+    element: <BrushIcon />,
+  },
+  {
+    id: 1,
+    name: 'circle',
+    element: <PanoramaFishEyeIcon />,
+  },
+  {
+    id: 2,
+    name: 'rect',
+    element: <HorizontalRuleIcon />,
+  },
+  {
+    id: 3,
+    name: 'line',
+    element: <Crop54Icon />,
+  },
+];
 
+const drawerWidth = 65;
 function ToolsPanel() {
   return (
     <>
@@ -34,34 +56,13 @@ function ToolsPanel() {
               </ListItemButton>
             </ListItem>
           </Link>
-          <ListItem disablePadding>
-            <ListItemButton onClick={(e) => console.log(e)}>
-              <ListItemIcon>
-                <BrushIcon />
-              </ListItemIcon>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton onClick={(e) => console.log(e)}>
-              <ListItemIcon>
-                <PanoramaFishEyeIcon />
-              </ListItemIcon>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton onClick={(e) => console.log(e)}>
-              <ListItemIcon>
-                <Crop54Icon />
-              </ListItemIcon>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton onClick={(e) => console.log(e)}>
-              <ListItemIcon>
-                <HorizontalRuleIcon />
-              </ListItemIcon>
-            </ListItemButton>
-          </ListItem>
+          {iconElements.map((element) => (
+            <ListItem key={element.id} disablePadding>
+              <ListItemButton sx={{}} onClick={(e) => console.log(e)}>
+                <ListItemIcon>{element.element}</ListItemIcon>
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
     </>
