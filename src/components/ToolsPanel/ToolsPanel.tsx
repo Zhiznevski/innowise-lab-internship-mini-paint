@@ -1,4 +1,12 @@
-import { Drawer, Link, List, ListItem, ListItemButton, ListItemIcon } from '@mui/material';
+import {
+  Container,
+  Drawer,
+  Link,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import BrushIcon from '@mui/icons-material/Brush';
@@ -9,6 +17,8 @@ import { HOME_ROUTE } from '../../utils/constants/routes';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { setToolValue } from '../../store/toolSlice';
 import { Tools } from '../../utils/constants/tools';
+import { setToolColorValue } from '../../store/toolColorSlice';
+import { HexColorPicker } from 'react-colorful';
 
 const iconElements = [
   {
@@ -42,7 +52,8 @@ const drawerWidth = 60;
 
 function ToolsPanel() {
   const tool = useAppSelector((state) => state.tool.toolValue);
-  console.log(tool);
+  const toolColor = useAppSelector((state) => state.toolColor.toolColorValue);
+  console.log(toolColor);
   const dispatch = useAppDispatch();
 
   return (
@@ -81,6 +92,24 @@ function ToolsPanel() {
             </ListItem>
           ))}
         </List>
+      </Drawer>
+      <Drawer
+        sx={{
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            overflowX: 'hidden',
+          },
+        }}
+        variant="permanent"
+        anchor="right"
+      >
+        <Container sx={{ paddingTop: 5 }}>
+          <HexColorPicker
+            color={toolColor}
+            onChange={(newValue) => dispatch(setToolColorValue(newValue))}
+          />
+        </Container>
       </Drawer>
     </>
   );

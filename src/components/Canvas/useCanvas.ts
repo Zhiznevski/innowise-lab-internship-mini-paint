@@ -103,8 +103,6 @@ function useCanvas(lineColor = 'black', lineWidth = 5, currentTool = Tools.brush
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
-      canvas.width = 600;
-      canvas.height = 900;
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.lineWidth = lineWidth;

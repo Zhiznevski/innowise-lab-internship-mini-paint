@@ -7,8 +7,9 @@ export const URL =
 
 function Canvas() {
   const tool = useAppSelector((state) => state.tool.toolValue);
+  const toolsColor = useAppSelector((state) => state.toolColor.toolColorValue);
 
-  const { canvasRef, clearCanvas, eventHandlers } = useCanvas('black', 5, tool);
+  const { canvasRef, clearCanvas, eventHandlers } = useCanvas(toolsColor, 5, tool);
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
