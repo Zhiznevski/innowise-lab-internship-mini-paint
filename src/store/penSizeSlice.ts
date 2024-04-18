@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialState = 5;
+const initialState = 3;
 const penSizeSlice = createSlice({
   name: 'penSizeValue',
   initialState: {

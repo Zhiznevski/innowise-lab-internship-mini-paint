@@ -45,6 +45,29 @@ const iconElements = [
   },
 ];
 
+const penWidth = [
+  {
+    value: 1,
+    label: '1px',
+  },
+  {
+    value: 3,
+    label: '3px',
+  },
+  {
+    value: 6,
+    label: '6px',
+  },
+  {
+    value: 9,
+    label: '9px',
+  },
+  {
+    value: 12,
+    label: '12px',
+  },
+];
+
 const itemStyles = {
   buttonHover: 'rgba(0, 0, 0, 0.1)',
   iconActive: '#2e7d32',
@@ -117,7 +140,16 @@ function ToolsPanel() {
       >
         <Container sx={{ paddingTop: 5 }}>
           <HexColorPicker color={toolColor} onChange={colorPickerHandleChange} />
-          <Slider aria-label="brush-size" value={penSize} onChange={penSizeHandleChange} />
+          <Slider
+            sx={{ color: 'black', mt: 5 }}
+            defaultValue={3}
+            marks={penWidth}
+            min={1}
+            max={12}
+            aria-label="pen-size"
+            value={penSize}
+            onChange={penSizeHandleChange}
+          />
         </Container>
       </Drawer>
     </>
