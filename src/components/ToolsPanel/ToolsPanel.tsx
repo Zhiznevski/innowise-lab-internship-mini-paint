@@ -6,6 +6,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
+  Slider,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
@@ -19,6 +20,7 @@ import { setToolValue } from '../../store/toolSlice';
 import { Tools } from '../../utils/constants/tools';
 import { setToolColorValue } from '../../store/toolColorSlice';
 import { HexColorPicker } from 'react-colorful';
+import { setPenSizeValue } from '../../store/penSizeSlice';
 
 const iconElements = [
   {
@@ -53,8 +55,17 @@ const drawerWidth = 60;
 function ToolsPanel() {
   const tool = useAppSelector((state) => state.tool.toolValue);
   const toolColor = useAppSelector((state) => state.toolColor.toolColorValue);
-  console.log(toolColor);
+  const penSize = useAppSelector((state) => state.penSize.penSizeValue);
+
   const dispatch = useAppDispatch();
+
+  const colorPickerHandleChange = (color: string) => {
+    dispatch(setToolColorValue(color));
+  };
+
+  const penSizeHandleChange = (_: Event, newValue: number | number[]) => {
+    dispatch(setPenSizeValue(newValue as number));
+  };
 
   return (
     <>
@@ -105,10 +116,8 @@ function ToolsPanel() {
         anchor="right"
       >
         <Container sx={{ paddingTop: 5 }}>
-          <HexColorPicker
-            color={toolColor}
-            onChange={(newValue) => dispatch(setToolColorValue(newValue))}
-          />
+          <HexColorPicker color={toolColor} onChange={colorPickerHandleChange} />
+          <Slider aria-label="brush-size" value={penSize} onChange={penSizeHandleChange} />
         </Container>
       </Drawer>
     </>
