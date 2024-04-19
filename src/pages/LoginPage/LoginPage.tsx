@@ -6,10 +6,10 @@ import { LoginValidationSchemaType, loginValidationSchema } from '../../utils/va
 import Form from '../../components/Form/Form';
 import { auth } from '../../services/firebase/config';
 import { logInWithEmailAndPassword } from '../../services/firebase/Auth.service';
-import { useEffect, useState } from 'react';
-import Notification from '../../components/Notification/Notification';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HOME_ROUTE } from '../../utils/constants/routes';
+import { toast } from 'react-toastify';
 
 const formInfo = {
   title: 'Login',
@@ -20,7 +20,6 @@ const formInfo = {
 
 function LoginPage() {
   const [user, loading] = useAuthState(auth);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -31,15 +30,13 @@ function LoginPage() {
     resolver: yupResolver<LoginValidationSchemaType>(loginValidationSchema),
     mode: 'onBlur',
   });
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
+
+  const notify = () => {
+    toast.error('Invalid authorization data');
   };
 
   const onSubmit: SubmitHandler<LoginValidationSchemaType> = async (data) => {
-    await logInWithEmailAndPassword(data.email, data.password, () => openModal());
+    await logInWithEmailAndPassword(data.email, data.password, notify);
   };
 
   useEffect(() => {
@@ -92,9 +89,6 @@ function LoginPage() {
           </Button>
         </Form>
       </form>
-      <Notification onClose={closeModal} isOpen={isModalOpen}>
-        Invalid authorization data
-      </Notification>
     </Container>
   );
 }
