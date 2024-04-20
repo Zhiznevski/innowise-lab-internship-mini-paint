@@ -6,6 +6,7 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
 import { EDITOR_ROUTE } from '../../utils/constants/routes';
+import SearchBar from '../SearchBar/SearchBar';
 
 interface HeaderPropsType {
   user: User | null | undefined;
@@ -33,6 +34,7 @@ function Header({ user }: HeaderPropsType) {
                   <PaletteIcon />
                 </IconButton>
               </Link>
+              <SearchBar />
               <IconButton
                 onClick={logoutHandleClick}
                 size="large"

@@ -2,16 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../services/firebase/config';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { LOGIN_ROUTE } from '../../utils/constants/routes';
-import { CircularProgress, TextField } from '@mui/material';
+import { CircularProgress, Container } from '@mui/material';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import useSearchByValue from './useSearchByValue';
+import { useAppSelector } from '../../store/store';
 
 function RootPage() {
   const [user, loading] = useAuthState(auth);
-  const [searchValue, setSearchValue] = useState('');
-  const searchResults = useSearchByValue('images', searchValue);
+  const searchValue = useAppSelector((state) => state.searchValue.searchValue);
+  const [searchResults, isLoading] = useSearchByValue('images', searchValue);
 
   const navigate = useNavigate();
 
@@ -27,15 +28,10 @@ function RootPage() {
 
   return (
     <>
-      <Header user={user} />
-      <TextField
-        placeholder="Find by user name"
-        value={searchValue}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setSearchValue(event.target.value);
-        }}
-      />
-      <ImageGallery imageData={searchResults} />
+      <Container sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        <Header user={user} />
+        <ImageGallery imageData={searchResults} isLoading={isLoading} />
+      </Container>
     </>
   );
 }

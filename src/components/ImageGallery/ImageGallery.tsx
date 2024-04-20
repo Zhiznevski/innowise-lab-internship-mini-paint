@@ -1,10 +1,13 @@
+import { LinearProgress } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 interface ImageGalleryPropsType {
   imageData: ImageListItemType[];
+  isLoading: boolean;
 }
+
 export interface ImageListItemType {
   imageUrl: string;
   userEmail: string;
@@ -12,10 +15,14 @@ export interface ImageListItemType {
   createdAt: Date;
 }
 
-function ImageGallery({ imageData }: ImageGalleryPropsType) {
+function ImageGallery({ imageData, isLoading }: ImageGalleryPropsType) {
+  if (isLoading) {
+    return <LinearProgress />;
+  }
+
   return (
     <>
-      <ImageList sx={{ padding: 1 }} variant="masonry" cols={4} gap={20}>
+      <ImageList sx={{ padding: 1 }} cols={4} gap={10}>
         {imageData.map((item) => (
           <ImageListItem
             sx={{
@@ -25,7 +32,7 @@ function ImageGallery({ imageData }: ImageGalleryPropsType) {
             key={item.imageUrl}
           >
             <img srcSet={item.imageUrl} alt="gallery image" loading="lazy" />
-            <ImageListItemBar subtitle={<span>by: {item.userName}</span>} position="below" />
+            <ImageListItemBar title={`by: ${item.userName}`} position="below" />
           </ImageListItem>
         ))}
       </ImageList>
