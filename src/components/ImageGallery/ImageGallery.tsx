@@ -1,4 +1,4 @@
-import { LinearProgress } from '@mui/material';
+import { LinearProgress, useMediaQuery } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -16,13 +16,15 @@ export interface ImageListItemType {
 }
 
 function ImageGallery({ imageData, isLoading }: ImageGalleryPropsType) {
+  const isMobile = useMediaQuery('(max-width:600px)');
+
   if (isLoading) {
     return <LinearProgress />;
   }
 
   return (
     <>
-      <ImageList sx={{ padding: 1 }} cols={4} gap={10}>
+      <ImageList sx={{ padding: 1 }} cols={isMobile ? 2 : 4} gap={10}>
         {imageData.map((item) => (
           <ImageListItem
             sx={{

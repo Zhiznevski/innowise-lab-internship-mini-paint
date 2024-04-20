@@ -8,19 +8,22 @@ import { CircularProgress, Container } from '@mui/material';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import useSearchByValue from './useSearchByValue';
 import { useAppSelector } from '../../store/store';
+import { toast } from 'react-toastify';
 
 function RootPage() {
   const [user, loading] = useAuthState(auth);
   const searchValue = useAppSelector((state) => state.searchValue.searchValue);
-  const [searchResults, isLoading] = useSearchByValue('images', searchValue);
-
+  const [searchResults, isLoading, error] = useSearchByValue('images', searchValue);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!user) {
       navigate(LOGIN_ROUTE);
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    if (error) toast.error('Something went wrong');
+  }, [error]);
 
   if (loading) {
     return <CircularProgress />;
