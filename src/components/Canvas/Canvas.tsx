@@ -1,39 +1,53 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, ButtonGroup } from '@mui/material';
 import useCanvas from './useCanvas';
 import { useAppSelector } from '../../store/store';
-import { ref, uploadString } from 'firebase/storage';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { db, storage } from '../../services/firebase/config';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection } from 'firebase/firestore';
+
+import { addDoc, collection } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
+import SaveIcon from '@mui/icons-material/Save';
+import { LoadingButton } from '@mui/lab';
+import { User } from 'firebase/auth';
 
+interface CanvasPropsRef {
+  user: User | null | undefined;
+}
 export const URL =
   'https://cors-anywhere.herokuapp.com/https://i.pinimg.com/564x/ed/a8/e2/eda8e26c050995c78c432709c165e69f.jpg';
 
-function Canvas() {
+function Canvas({ user }: CanvasPropsRef) {
+  const [isLoading, setIsLoading] = useState(false);
   const tool = useAppSelector((state) => state.tool.toolValue);
   const toolsColor = useAppSelector((state) => state.toolColor.toolColorValue);
   const penSize = useAppSelector((state) => state.penSize.penSizeValue);
-  const [value] = useCollection(collection(db, 'users'), {
-    snapshotListenOptions: { includeMetadataChanges: true },
-  });
   const { canvasRef, clearCanvas, eventHandlers } = useCanvas(toolsColor, penSize, tool);
-  console.log(value?.docs.map((el) => el.data()));
 
   const notify = () => {
     toast.success('Image successfully uploaded!');
   };
 
   const uploadImage = async () => {
+    setIsLoading(true);
     const url = canvasRef.current?.toDataURL();
     const id = uuidv4();
     const storageRef = ref(storage, `images/${id}.png`);
     console.log(url);
-    url &&
-      (await uploadString(storageRef, url, 'data_url').then(() => {
-        notify();
-      }));
+    if (url) {
+      const snapshot = await uploadString(storageRef, url, 'data_url');
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      console.log(downloadURL);
+      await addDoc(collection(db, 'images'), {
+        imageUrl: downloadURL,
+        createAt: new Date(),
+        userName: user?.displayName,
+        userEmail: user?.email,
+      });
+      setIsLoading(false);
+      notify();
+    }
   };
 
   return (
@@ -55,12 +69,17 @@ function Canvas() {
           onMouseUp={eventHandlers.mouseUpHandler}
           onMouseMove={eventHandlers.mouseMoveHandler}
         ></canvas>
-        <Button onClick={clearCanvas} variant="contained" sx={{ marrginTop: 5 }}>
-          clear
-        </Button>
-        <Button onClick={uploadImage} variant="contained" sx={{ marrginTop: 5 }}>
-          save
-        </Button>
+        <ButtonGroup sx={{ mt: 2 }} variant="contained" aria-label="Loading button group">
+          <Button onClick={clearCanvas}>clear</Button>
+          <LoadingButton
+            onClick={uploadImage}
+            loading={isLoading}
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
+          >
+            save
+          </LoadingButton>
+        </ButtonGroup>
       </Box>
     </>
   );
