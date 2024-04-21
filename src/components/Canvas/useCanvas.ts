@@ -124,7 +124,6 @@ function useCanvas(
       canvasRef.current?.getContext('2d')?.drawImage(image, 0, 0);
     };
     image.src = editImageLink;
-    return () => clearCanvas();
   }, [editImageLink]);
 
   const eventHandlers = {
