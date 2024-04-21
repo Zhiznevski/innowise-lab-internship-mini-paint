@@ -14,7 +14,6 @@ interface CanvasPropsRef {
 }
 
 function Canvas({ user }: CanvasPropsRef) {
-  console.log('Render');
   const editImage = useAppSelector((state) => state.editImage.editImageData);
   const dispatch = useAppDispatch();
   const tool = useAppSelector((state) => state.tool.toolValue);
