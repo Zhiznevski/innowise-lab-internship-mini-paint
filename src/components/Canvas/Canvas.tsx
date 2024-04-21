@@ -1,36 +1,47 @@
 import { Button, ButtonGroup, Container } from '@mui/material';
 import useCanvas from './useCanvas';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import { toast } from 'react-toastify';
 import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import { User } from 'firebase/auth';
 import useUploadImage from './useUploadImage';
+import { deleteDocument } from '../../services/firebase/Documets.servise';
+import { initialEditImageState, setEditImageData } from '../../store/editImageSlice';
 
 interface CanvasPropsRef {
   user: User | null | undefined;
 }
 
-export const URL =
-  'https://cors-anywhere.herokuapp.com/https://i.pinimg.com/564x/ed/a8/e2/eda8e26c050995c78c432709c165e69f.jpg';
-
 function Canvas({ user }: CanvasPropsRef) {
+  console.log('Render');
+  const editImage = useAppSelector((state) => state.editImage.editImageData);
+  const dispatch = useAppDispatch();
   const tool = useAppSelector((state) => state.tool.toolValue);
   const toolsColor = useAppSelector((state) => state.toolColor.toolColorValue);
   const penSize = useAppSelector((state) => state.penSize.penSizeValue);
-  const { canvasRef, clearCanvas, eventHandlers } = useCanvas(toolsColor, penSize, tool);
+  const { canvasRef, clearCanvas, eventHandlers } = useCanvas(
+    toolsColor,
+    penSize,
+    tool,
+    editImage.imageUrl
+  );
   const [uploadImage, isLoading, error] = useUploadImage(canvasRef, user);
 
   if (error) toast.error('Image was not loaded');
 
   const handleUploadButtonClick = async () => {
+    await deleteDocument(editImage.itemId);
     await uploadImage();
     toast.success('Image successfully uploaded!');
+    dispatch(setEditImageData(initialEditImageState));
+    clearCanvas();
   };
 
   return (
     <>
       <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {editImage.imageUrl && `EDIT MODE FOR ${editImage.imageUrl}`}
         <ButtonGroup sx={{ mb: 1 }} variant="contained" aria-label="Loading button group">
           <Button onClick={clearCanvas}>clear</Button>
           <LoadingButton
@@ -39,7 +50,7 @@ function Canvas({ user }: CanvasPropsRef) {
             loadingPosition="start"
             startIcon={<SaveIcon />}
           >
-            save
+            upload
           </LoadingButton>
         </ButtonGroup>
         <canvas

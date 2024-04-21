@@ -11,7 +11,6 @@ function useUploadImage(
 ) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
-
   const uploadImage = async () => {
     try {
       setIsLoading(true);

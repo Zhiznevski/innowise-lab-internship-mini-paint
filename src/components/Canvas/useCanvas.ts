@@ -8,13 +8,17 @@ interface Coordinates {
 
 const LEFT_MOUSE_BUTTON_NUMBER = 1;
 
-function useCanvas(lineColor = 'black', lineWidth = 5, currentTool = Tools.brush) {
+function useCanvas(
+  lineColor = 'black',
+  lineWidth = 5,
+  currentTool = Tools.brush,
+  editImageLink: string
+) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startCoods, setStartCoords] = useState<Coordinates>({ startX: 0, startY: 0 });
   const [snapshot, setSnapshot] = useState<string | undefined>('');
-
   const clearCanvas = () => {
     if (contextRef.current && canvasRef.current) {
       contextRef.current.clearRect(0, 0, canvasRef.current?.width, canvasRef.current?.height);
@@ -111,6 +115,17 @@ function useCanvas(lineColor = 'black', lineWidth = 5, currentTool = Tools.brush
       contextRef.current = ctx;
     }
   }, [lineColor, lineWidth, contextRef]);
+
+  useEffect(() => {
+    if (!editImageLink) return;
+    const image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.onload = function () {
+      canvasRef.current?.getContext('2d')?.drawImage(image, 0, 0);
+    };
+    image.src = editImageLink;
+    return () => clearCanvas();
+  }, [editImageLink]);
 
   const eventHandlers = {
     mouseDownHandler,

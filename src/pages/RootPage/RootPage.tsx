@@ -33,7 +33,7 @@ function RootPage() {
     <>
       <Container sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
         <Header user={user} />
-        <ImageGallery imageData={searchResults} isLoading={isLoading} />
+        <ImageGallery imageData={searchResults} isLoading={isLoading} user={user} />
       </Container>
     </>
   );

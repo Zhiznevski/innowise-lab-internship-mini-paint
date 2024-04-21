@@ -1,22 +1,31 @@
-import { LinearProgress, useMediaQuery } from '@mui/material';
+import { Button, LinearProgress, useMediaQuery } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { User } from 'firebase/auth';
+import { useAppDispatch } from '../../store/store';
+import { setEditImageData } from '../../store/editImageSlice';
+import { useNavigate } from 'react-router-dom';
+import { EDITOR_ROUTE } from '../../utils/constants/routes';
 
 interface ImageGalleryPropsType {
   imageData: ImageListItemType[];
   isLoading: boolean;
+  user: User | null | undefined;
 }
 
 export interface ImageListItemType {
+  itemId: string;
   imageUrl: string;
   userEmail: string;
   userName: string;
   createdAt: Date;
 }
 
-function ImageGallery({ imageData, isLoading }: ImageGalleryPropsType) {
+function ImageGallery({ imageData, isLoading, user }: ImageGalleryPropsType) {
   const isMobile = useMediaQuery('(max-width:600px)');
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <LinearProgress />;
@@ -34,7 +43,17 @@ function ImageGallery({ imageData, isLoading }: ImageGalleryPropsType) {
             key={item.imageUrl}
           >
             <img srcSet={item.imageUrl} alt="gallery image" loading="lazy" />
-            <ImageListItemBar title={`by: ${item.userName}`} position="below" />
+            <ImageListItemBar title={`by: ${item.userName}`} position="below"></ImageListItemBar>
+            {user?.email === item.userEmail && (
+              <Button
+                onClick={() => {
+                  dispatch(setEditImageData(item));
+                  navigate(EDITOR_ROUTE);
+                }}
+              >
+                edit
+              </Button>
+            )}
           </ImageListItem>
         ))}
       </ImageList>

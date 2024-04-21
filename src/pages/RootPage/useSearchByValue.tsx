@@ -21,11 +21,13 @@ function useSearchByValue(collectionName: string, searchValue: string) {
         onSnapshot(q, (querySnapshot) => {
           const images: ImageListItemType[] = [];
           querySnapshot.forEach((doc) => {
-            images.push(doc.data() as ImageListItemType);
+            images.push({
+              ...doc.data(),
+              itemId: doc.id,
+            } as ImageListItemType);
           });
           setSearchResults(images);
           setIsLoading(false);
-          console.log('sucsess');
         });
       } catch (e) {
         setError(e);

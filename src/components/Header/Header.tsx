@@ -7,12 +7,15 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
 import { EDITOR_ROUTE } from '../../utils/constants/routes';
 import SearchBar from '../SearchBar/SearchBar';
+import { useAppDispatch } from '../../store/store';
+import { initialEditImageState, setEditImageData } from '../../store/editImageSlice';
 
 interface HeaderPropsType {
   user: User | null | undefined;
 }
 
 function Header({ user }: HeaderPropsType) {
+  const dispatch = useAppDispatch();
   const logoutHandleClick = async () => {
     await logout();
   };
@@ -23,7 +26,11 @@ function Header({ user }: HeaderPropsType) {
         <Toolbar>
           {user && (
             <>
-              <Link component={RouterLink} to={EDITOR_ROUTE}>
+              <Link
+                onClick={() => dispatch(setEditImageData(initialEditImageState))}
+                component={RouterLink}
+                to={EDITOR_ROUTE}
+              >
                 <IconButton
                   size="large"
                   aria-label="logout from account"
