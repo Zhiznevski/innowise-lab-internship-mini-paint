@@ -15,6 +15,7 @@ function RootPage() {
   const searchValue = useAppSelector((state) => state.searchValue.searchValue);
   const [searchResults, isLoading, error] = useSearchByValue('images', searchValue);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!user) {
       navigate(LOGIN_ROUTE);

@@ -9,6 +9,7 @@ function useSearchByValue(collectionName: string, searchValue: string) {
   const [searchResults, setSearchResults] = useState<ImageListItemType[]>([]);
 
   useEffect(() => {
+    let ignore = false;
     function getImageData() {
       try {
         setIsLoading(true);
@@ -26,8 +27,10 @@ function useSearchByValue(collectionName: string, searchValue: string) {
               itemId: doc.id,
             } as ImageListItemType);
           });
-          setSearchResults(images);
-          setIsLoading(false);
+          if (!ignore) {
+            setSearchResults(images);
+            setIsLoading(false);
+          }
         });
       } catch (e) {
         setError(e);
@@ -35,6 +38,9 @@ function useSearchByValue(collectionName: string, searchValue: string) {
       }
     }
     getImageData();
+    return () => {
+      ignore = true;
+    };
   }, [searchValue, collectionName]);
   return [searchResults, isLoading, error] as const;
 }
