@@ -6,6 +6,7 @@ export interface ImageListPropsType {
   isEditable: boolean;
   handleEditButtonClick: () => void;
   handleDeleteButtonClick: () => void;
+  handleOpenModal: () => void;
 }
 
 function ImageItem({
@@ -13,6 +14,7 @@ function ImageItem({
   isEditable,
   handleDeleteButtonClick,
   handleEditButtonClick,
+  handleOpenModal,
 }: ImageListPropsType) {
   return (
     <ImageListItem
@@ -23,7 +25,13 @@ function ImageItem({
       }}
       key={imageData.imageUrl}
     >
-      <img srcSet={imageData.imageUrl} alt="gallery image" loading="lazy" />
+      <img
+        onClick={handleOpenModal}
+        srcSet={imageData.imageUrl}
+        alt="gallery image"
+        loading="lazy"
+        style={{ cursor: 'pointer' }}
+      />
       <ImageListItemBar title={`by: ${imageData.userName}`} position="below"></ImageListItemBar>
       {isEditable && (
         <ButtonGroup

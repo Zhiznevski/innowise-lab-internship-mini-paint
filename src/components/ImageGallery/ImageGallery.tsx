@@ -1,4 +1,4 @@
-import { LinearProgress, useMediaQuery } from '@mui/material';
+import { Box, LinearProgress, Modal, useMediaQuery } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 
 import { User } from 'firebase/auth';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { EDITOR_ROUTE } from '../../utils/constants/routes';
 import { deleteDocument } from '../../services/firebase/Documets.servise';
 import ImageItem from './ImageItem/ImageItem';
+import { useState } from 'react';
 
 interface ImageGalleryPropsType {
   imageData: ImageListItemType[];
@@ -22,12 +23,27 @@ export interface ImageListItemType {
   userName: string;
   createdAt: Date;
 }
+const modalStyle = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: 0,
+  boxShadow: 24,
+  p: 4,
+};
 
 function ImageGallery({ imageData, isLoading, user }: ImageGalleryPropsType) {
+  const [open, setOpen] = useState(false);
+  const [modalImageUrl, setModalImageUrl] = useState('');
   const isMobile = useMediaQuery('(max-width:480px)');
   const isTablet = useMediaQuery('(max-width:780px)');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const getColsCount = () => {
     if (isMobile) {
@@ -44,22 +60,40 @@ function ImageGallery({ imageData, isLoading, user }: ImageGalleryPropsType) {
   }
 
   return (
-    <ImageList sx={{ padding: 1 }} cols={getColsCount()} gap={10}>
-      {imageData.map((item) => (
-        <ImageItem
-          key={item.itemId}
-          imageData={item}
-          isEditable={user?.email === item.userEmail}
-          handleEditButtonClick={() => {
-            dispatch(setEditImageData(item));
-            navigate(EDITOR_ROUTE);
-          }}
-          handleDeleteButtonClick={async () => {
-            await deleteDocument(item.itemId);
-          }}
-        />
-      ))}
-    </ImageList>
+    <>
+      <ImageList sx={{ padding: 1 }} cols={getColsCount()} gap={10}>
+        {imageData.map((item) => (
+          <ImageItem
+            key={item.itemId}
+            imageData={item}
+            isEditable={user?.email === item.userEmail}
+            handleEditButtonClick={() => {
+              dispatch(setEditImageData(item));
+              navigate(EDITOR_ROUTE);
+            }}
+            handleDeleteButtonClick={async () => {
+              await deleteDocument(item.itemId);
+            }}
+            handleOpenModal={() => {
+              setModalImageUrl(item.imageUrl);
+              handleOpen();
+            }}
+          />
+        ))}
+      </ImageList>
+      {modalImageUrl && !isMobile && (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <img src={modalImageUrl} style={{ width: '100%' }} alt="modal-image"></img>
+          </Box>
+        </Modal>
+      )}
+    </>
   );
 }
 
