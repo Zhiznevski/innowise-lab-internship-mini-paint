@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../store/store';
 import { setEditImageData } from '../../store/editImageSlice';
 import { useNavigate } from 'react-router-dom';
 import { EDITOR_ROUTE } from '../../utils/constants/routes';
-import { deleteDocument } from '../../services/firebase/Documets.servise';
+import { deleteDocument } from '../../services/firebase/Documets.service';
 import ImageItem from './ImageItem/ImageItem';
 import { useState } from 'react';
 

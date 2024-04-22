@@ -7,6 +7,7 @@ import {
   ListItemButton,
   ListItemIcon,
   Slider,
+  useMediaQuery,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
@@ -79,6 +80,7 @@ function ToolsPanel() {
   const tool = useAppSelector((state) => state.tool.toolValue);
   const toolColor = useAppSelector((state) => state.toolColor.toolColorValue);
   const penSize = useAppSelector((state) => state.penSize.penSizeValue);
+  const isLaptop = useMediaQuery('(min-width:1100px)');
 
   const dispatch = useAppDispatch();
 
@@ -136,12 +138,26 @@ function ToolsPanel() {
           },
         }}
         variant="permanent"
-        anchor="right"
+        anchor={isLaptop ? 'right' : 'bottom'}
       >
-        <Container sx={{ paddingTop: 5 }}>
-          <HexColorPicker color={toolColor} onChange={colorPickerHandleChange} />
+        <Container
+          sx={{
+            pt: 2,
+            pb: 1,
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: isLaptop ? 'column' : 'row',
+            justifyContent: 'center',
+            gap: 2,
+          }}
+        >
+          <HexColorPicker
+            style={{ maxWidth: '180px' }}
+            color={toolColor}
+            onChange={colorPickerHandleChange}
+          />
           <Slider
-            sx={{ color: 'black', mt: 5 }}
+            sx={{ color: 'black', mt: 5, maxWidth: '180px' }}
             defaultValue={3}
             marks={penWidth}
             min={1}

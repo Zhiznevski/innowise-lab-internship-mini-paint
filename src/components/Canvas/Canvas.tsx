@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Container } from '@mui/material';
+import { Button, ButtonGroup, Container, useMediaQuery } from '@mui/material';
 import useCanvas from './useCanvas';
 import { useAppSelector } from '../../store/store';
 import { toast } from 'react-toastify';
@@ -6,7 +6,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import { User } from 'firebase/auth';
 import useUploadImage from './useUploadImage';
-import { deleteDocument } from '../../services/firebase/Documets.servise';
+import { deleteDocument } from '../../services/firebase/Documets.service';
 
 interface CanvasPropsRef {
   user: User | null | undefined;
@@ -17,6 +17,9 @@ function Canvas({ user }: CanvasPropsRef) {
   const tool = useAppSelector((state) => state.tool.toolValue);
   const toolsColor = useAppSelector((state) => state.toolColor.toolColorValue);
   const penSize = useAppSelector((state) => state.penSize.penSizeValue);
+  const isMobile = useMediaQuery('(max-width:570px)');
+  const isTablet = useMediaQuery('(max-width:780px)');
+  const isSmallMobile = useMediaQuery('(max-width:430px)');
   const { canvasRef, clearCanvas, eventHandlers } = useCanvas(
     toolsColor,
     penSize,
@@ -31,6 +34,26 @@ function Canvas({ user }: CanvasPropsRef) {
     await deleteDocument(editImage.itemId);
     await uploadImage();
     toast.success('Image successfully uploaded!');
+  };
+
+  const getCanvasSize = () => {
+    if (isMobile) {
+      return {
+        width: 300,
+        height: 450,
+      };
+    }
+    if (isTablet) {
+      return {
+        width: 450,
+        height: 600,
+      };
+    }
+
+    return {
+      width: 600,
+      height: 750,
+    };
   };
 
   return (
@@ -49,14 +72,15 @@ function Canvas({ user }: CanvasPropsRef) {
         </ButtonGroup>
         <canvas
           ref={canvasRef}
-          height={800}
-          width={600}
+          height={getCanvasSize().height}
+          width={getCanvasSize().width}
           style={{
             alignSelf: 'center',
             background: '#fff',
             border: '1px solid rgba(0, 0, 0, 0.12)',
             cursor: 'crosshair',
             touchAction: 'none',
+            marginLeft: isSmallMobile ? 60 : 0,
           }}
           onPointerMove={eventHandlers.pointerMoveHandler}
           onPointerUp={eventHandlers.pointerUpHandler}
