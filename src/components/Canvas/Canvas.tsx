@@ -56,10 +56,11 @@ function Canvas({ user }: CanvasPropsRef) {
             background: '#fff',
             border: '1px solid rgba(0, 0, 0, 0.12)',
             cursor: 'crosshair',
+            touchAction: 'none',
           }}
-          onMouseDown={eventHandlers.mouseDownHandler}
-          onMouseUp={eventHandlers.mouseUpHandler}
-          onMouseMove={eventHandlers.mouseMoveHandler}
+          onPointerMove={eventHandlers.pointerMoveHandler}
+          onPointerUp={eventHandlers.pointerUpHandler}
+          onPointerDown={eventHandlers.pointerDownHandler}
         ></canvas>
       </Container>
     </>
