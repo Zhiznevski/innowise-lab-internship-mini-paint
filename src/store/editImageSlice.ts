@@ -7,6 +7,7 @@ export const initialEditImageState: ImageListItemType = {
   userName: '',
   imageUrl: '',
   createdAt: new Date(),
+  storagePath: '',
 };
 
 const editImageSlice = createSlice({

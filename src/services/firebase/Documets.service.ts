@@ -1,10 +1,13 @@
 import { deleteDoc, doc } from 'firebase/firestore';
-import { db } from './config';
+import { db, storage } from './config';
+import { deleteObject, ref } from 'firebase/storage';
 
-export const deleteDocument = async (itemId: string) => {
+export const deleteDocument = async (itemId: string, storagePath: string) => {
   if (!itemId) return;
   try {
     await deleteDoc(doc(db, 'images', itemId));
+    const desertRef = ref(storage, storagePath);
+    await deleteObject(desertRef);
   } catch (e) {
     console.error(e);
   }

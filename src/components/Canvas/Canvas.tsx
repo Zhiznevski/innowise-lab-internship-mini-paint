@@ -6,7 +6,6 @@ import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import { User } from 'firebase/auth';
 import useUploadImage from './useUploadImage';
-import { deleteDocument } from '../../services/firebase/Documets.service';
 
 interface CanvasPropsRef {
   user: User | null | undefined;
@@ -26,12 +25,11 @@ function Canvas({ user }: CanvasPropsRef) {
     tool,
     editImage.imageUrl
   );
-  const [uploadImage, isLoading, error] = useUploadImage(canvasRef, user);
+  const [uploadImage, isLoading, error] = useUploadImage(canvasRef, user, editImage);
 
   if (error) toast.error('Image was not loaded');
 
   const handleUploadButtonClick = async () => {
-    await deleteDocument(editImage.itemId);
     await uploadImage();
     toast.success('Image successfully uploaded!');
   };

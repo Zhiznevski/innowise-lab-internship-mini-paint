@@ -22,6 +22,7 @@ export interface ImageListItemType {
   userEmail: string;
   userName: string;
   createdAt: Date;
+  storagePath: string;
 }
 const modalStyle = {
   position: 'absolute' as const,
@@ -72,7 +73,7 @@ function ImageGallery({ imageData, isLoading, user }: ImageGalleryPropsType) {
               navigate(EDITOR_ROUTE);
             }}
             handleDeleteButtonClick={async () => {
-              await deleteDocument(item.itemId);
+              await deleteDocument(item.itemId, item.storagePath);
             }}
             handleOpenModal={() => {
               setModalImageUrl(item.imageUrl);
