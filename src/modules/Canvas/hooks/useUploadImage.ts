@@ -2,9 +2,9 @@ import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { storage, db } from '../../api/config';
+import { storage, db } from '../../../api/config';
 import { User } from 'firebase/auth';
-import { ImageListItemType } from '../../types/types';
+import { ImageListItemType } from '../../../types/types';
 
 function useUploadImage(
   canvasRef: React.RefObject<HTMLCanvasElement>,

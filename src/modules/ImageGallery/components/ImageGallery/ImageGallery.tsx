@@ -1,16 +1,16 @@
 import { LinearProgress, useMediaQuery } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import { User } from 'firebase/auth';
-import { useAppDispatch, useAppSelector } from '../../../store/store';
-import { setEditImageData } from '../store/editImageSlice';
+import { useAppDispatch, useAppSelector } from '../../../../store/store';
+import { setEditImageData } from '../../store/editImageSlice';
 import { useNavigate } from 'react-router-dom';
-import { EDITOR_ROUTE } from '../../../constants/routes';
-import ImageItem from './ImageItem';
+import { EDITOR_ROUTE } from '../../../../constants/routes';
+import ImageItem from '../ImageItem/ImageItem';
 import { useState } from 'react';
-import useSearchByValue from '../hooks/useSearchByValue';
+import useSearchByValue from '../../hooks/useSearchByValue';
 import { toast } from 'react-toastify';
-import Modal from '../../../ui/Modal/Modal';
-import { deleteDocument } from '../api/deleteImageById';
+import Modal from '../../../../ui/Modal/Modal';
+import { deleteDocument } from '../../api/deleteImageById';
 
 interface ImageGalleryPropsType {
   user: User | null | undefined;
