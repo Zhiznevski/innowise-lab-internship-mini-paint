@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
-import { db } from '../../api/config';
-import { ImageListItemType } from '../../components/ImageGallery/ImageGallery';
+import { db } from '../../../api/config';
+import { ImageListItemType } from '../../../types/types';
 
 function useSearchByValue(collectionName: string, searchValue: string) {
   const [isLoading, setIsLoading] = useState(false);

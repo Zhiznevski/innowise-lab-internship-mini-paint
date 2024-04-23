@@ -8,7 +8,7 @@ import { Link } from '@mui/material';
 import { EDITOR_ROUTE } from '../../constants/routes';
 import SearchBar from '../SearchBar/SearchBar';
 import { useAppDispatch } from '../../store/store';
-import { initialEditImageState, setEditImageData } from '../../store/editImageSlice';
+import { setEditImageData } from '../../modules/ImageGallery/store/editImageSlice';
 
 interface HeaderPropsType {
   user: User | null | undefined;
@@ -27,7 +27,18 @@ function Header({ user }: HeaderPropsType) {
           {user && (
             <>
               <Link
-                onClick={() => dispatch(setEditImageData(initialEditImageState))}
+                onClick={() =>
+                  dispatch(
+                    setEditImageData({
+                      itemId: '',
+                      userEmail: '',
+                      userName: '',
+                      imageUrl: '',
+                      createdAt: new Date(),
+                      storagePath: '',
+                    })
+                  )
+                }
                 component={RouterLink}
                 to={EDITOR_ROUTE}
               >

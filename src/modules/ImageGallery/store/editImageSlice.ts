@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ImageListItemType } from '../components/ImageGallery/ImageGallery';
+import { ImageListItemType } from '../../../types/types';
 
-export const initialEditImageState: ImageListItemType = {
+const initialEditImageState: ImageListItemType = {
   itemId: '',
   userEmail: '',
   userName: '',
@@ -22,5 +22,5 @@ const editImageSlice = createSlice({
   },
 });
 
-export default editImageSlice.reducer;
+export const editImageReducer = editImageSlice.reducer;
 export const { setEditImageData } = editImageSlice.actions;

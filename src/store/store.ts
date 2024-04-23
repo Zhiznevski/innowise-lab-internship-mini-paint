@@ -4,7 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import toolColorSlice from './toolColorSlice';
 import penSizeSlice from './penSizeSlice';
 import searchValueSlice from './searchValueSlice';
-import editImageSlice from './editImageSlice';
+import { editImageReducer } from '../modules/ImageGallery';
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +12,7 @@ export const store = configureStore({
     toolColor: toolColorSlice,
     penSize: penSizeSlice,
     searchValue: searchValueSlice,
-    editImage: editImageSlice,
+    editImage: editImageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

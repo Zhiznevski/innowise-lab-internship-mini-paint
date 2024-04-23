@@ -1,5 +1,5 @@
 import { ImageListItem, ImageListItemBar, ButtonGroup, Button } from '@mui/material';
-import { ImageListItemType } from '../ImageGallery';
+import { ImageListItemType } from '../../../types/types';
 
 export interface ImageListPropsType {
   imageData: ImageListItemType;

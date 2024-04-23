@@ -1,12 +1,13 @@
-import { CircularProgress, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../api/config';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HOME_ROUTE } from '../../constants/routes';
 import { RegistrationForm } from '../../modules/RegistrationForm';
+import Spinner from '../../ui/Spinner/Spinner';
 
-function RegisterPage() {
+function RegistrationPage() {
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ function RegisterPage() {
   }, [user, navigate]);
 
   if (loading) {
-    return <CircularProgress />;
+    return <Spinner variant="circle" />;
   }
 
   return (
@@ -26,4 +27,4 @@ function RegisterPage() {
     </Container>
   );
 }
-export default RegisterPage;
+export default RegistrationPage;

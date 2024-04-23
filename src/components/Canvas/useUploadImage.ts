@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { storage, db } from '../../api/config';
 import { User } from 'firebase/auth';
-import { ImageListItemType } from '../ImageGallery/ImageGallery';
+import { ImageListItemType } from '../../types/types';
 
 function useUploadImage(
   canvasRef: React.RefObject<HTMLCanvasElement>,

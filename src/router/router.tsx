@@ -3,8 +3,8 @@ import { EDITOR_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from '../co
 import RootPage from '../pages/RootPage/RootPage';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import EditorPage from '../pages/EditorPage/EditorPage';
+import RegistrationPage from '../pages/RegistrationPage/RegistrationPage';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: REGISTRATION_ROUTE,
-    element: <RegisterPage />,
+    element: <RegistrationPage />,
   },
 ]);
 export default router;

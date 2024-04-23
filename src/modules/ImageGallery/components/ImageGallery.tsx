@@ -1,41 +1,24 @@
-import { Box, LinearProgress, Modal, useMediaQuery } from '@mui/material';
+import { LinearProgress, useMediaQuery } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
-
 import { User } from 'firebase/auth';
-import { useAppDispatch } from '../../store/store';
-import { setEditImageData } from '../../store/editImageSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
+import { setEditImageData } from '../store/editImageSlice';
 import { useNavigate } from 'react-router-dom';
-import { EDITOR_ROUTE } from '../../constants/routes';
-import { deleteDocument } from '../../services/firebase/Documets.service';
-import ImageItem from './ImageItem/ImageItem';
+import { EDITOR_ROUTE } from '../../../constants/routes';
+import ImageItem from './ImageItem';
 import { useState } from 'react';
+import useSearchByValue from '../hooks/useSearchByValue';
+import { toast } from 'react-toastify';
+import Modal from '../../../ui/Modal/Modal';
+import { deleteDocument } from '../api/deleteImageById';
 
 interface ImageGalleryPropsType {
-  imageData: ImageListItemType[];
-  isLoading: boolean;
   user: User | null | undefined;
 }
 
-export interface ImageListItemType {
-  itemId: string;
-  imageUrl: string;
-  userEmail: string;
-  userName: string;
-  createdAt: Date;
-  storagePath: string;
-}
-const modalStyle = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-function ImageGallery({ imageData, isLoading, user }: ImageGalleryPropsType) {
+export function ImageGallery({ user }: ImageGalleryPropsType) {
+  const searchValue = useAppSelector((state) => state.searchValue.searchValue);
+  const [searchResults, isLoading, error] = useSearchByValue('images', searchValue);
   const [open, setOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
   const isMobile = useMediaQuery('(max-width:480px)');
@@ -60,10 +43,14 @@ function ImageGallery({ imageData, isLoading, user }: ImageGalleryPropsType) {
     return <LinearProgress />;
   }
 
+  if (error) {
+    toast.error('Something went wrong');
+  }
+
   return (
     <>
       <ImageList sx={{ padding: 1 }} cols={getColsCount()} gap={10}>
-        {imageData.map((item) => (
+        {searchResults.map((item) => (
           <ImageItem
             key={item.itemId}
             imageData={item}
@@ -83,19 +70,10 @@ function ImageGallery({ imageData, isLoading, user }: ImageGalleryPropsType) {
         ))}
       </ImageList>
       {modalImageUrl && !isMobile && (
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={modalStyle}>
-            <img src={modalImageUrl} style={{ width: '100%' }} alt="modal-image"></img>
-          </Box>
+        <Modal isOpen={open} onClose={handleClose}>
+          <img src={modalImageUrl} style={{ width: '100%' }} alt="modal-image"></img>
         </Modal>
       )}
     </>
   );
 }
-
-export default ImageGallery;

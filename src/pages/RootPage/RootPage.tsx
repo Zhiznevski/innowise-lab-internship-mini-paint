@@ -4,16 +4,12 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../api/config';
 import { useEffect } from 'react';
 import { LOGIN_ROUTE } from '../../constants/routes';
-import { CircularProgress, Container } from '@mui/material';
-import ImageGallery from '../../components/ImageGallery/ImageGallery';
-import useSearchByValue from './useSearchByValue';
-import { useAppSelector } from '../../store/store';
-import { toast } from 'react-toastify';
+import { Container } from '@mui/material';
+import { ImageGallery } from '../../modules/ImageGallery';
+import Spinner from '../../ui/Spinner/Spinner';
 
 function RootPage() {
   const [user, loading] = useAuthState(auth);
-  const searchValue = useAppSelector((state) => state.searchValue.searchValue);
-  const [searchResults, isLoading, error] = useSearchByValue('images', searchValue);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,19 +18,15 @@ function RootPage() {
     }
   }, [user, navigate]);
 
-  useEffect(() => {
-    if (error) toast.error('Something went wrong');
-  }, [error]);
-
   if (loading) {
-    return <CircularProgress />;
+    return <Spinner variant="circle" />;
   }
 
   return (
     <>
       <Container sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
         <Header user={user} />
-        <ImageGallery imageData={searchResults} isLoading={isLoading} user={user} />
+        <ImageGallery user={user} />
       </Container>
     </>
   );
