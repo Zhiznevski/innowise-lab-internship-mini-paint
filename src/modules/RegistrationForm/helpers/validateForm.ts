@@ -2,7 +2,11 @@ import * as yup from 'yup';
 import YupPassword from 'yup-password';
 YupPassword(yup);
 
-const schema = yup.object().shape({
+export const registerValidationSchema = yup.object().shape({
+  username: yup
+    .string()
+    .min(4, 'Username must have at least 4 symbols')
+    .required('Enter an username'),
   email: yup.string().email().required('Enter an email'),
   password: yup
     .string()
@@ -13,14 +17,4 @@ const schema = yup.object().shape({
     .required('Enter a password'),
 });
 
-export const registerValidationSchema = schema.shape({
-  username: yup
-    .string()
-    .min(4, 'Username must have at least 4 symbols')
-    .required('Enter an username'),
-});
-
-export const loginValidationSchema = schema;
-
 export type RegisterValidationSchemaType = yup.InferType<typeof registerValidationSchema>;
-export type LoginValidationSchemaType = yup.InferType<typeof loginValidationSchema>;

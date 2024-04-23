@@ -1,10 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import {
-  EDITOR_ROUTE,
-  HOME_ROUTE,
-  LOGIN_ROUTE,
-  REGISTRATION_ROUTE,
-} from '../utils/constants/routes';
+import { EDITOR_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE } from '../constants/routes';
 import RootPage from '../pages/RootPage/RootPage';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import LoginPage from '../pages/LoginPage/LoginPage';

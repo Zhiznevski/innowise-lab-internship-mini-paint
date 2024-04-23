@@ -1,5 +1,5 @@
 import { deleteDoc, doc } from 'firebase/firestore';
-import { db, storage } from './config';
+import { db, storage } from '../../api/config';
 import { deleteObject, ref } from 'firebase/storage';
 
 export const deleteDocument = async (itemId: string, storagePath: string) => {

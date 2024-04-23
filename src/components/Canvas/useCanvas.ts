@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Tools } from '../../utils/constants/tools';
+import { Tools } from '../../constants/tools';
 
 interface Coordinates {
   startX: number;

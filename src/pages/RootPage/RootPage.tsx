@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../services/firebase/config';
+import { auth } from '../../api/config';
 import { useEffect } from 'react';
-import { LOGIN_ROUTE } from '../../utils/constants/routes';
+import { LOGIN_ROUTE } from '../../constants/routes';
 import { CircularProgress, Container } from '@mui/material';
 import ImageGallery from '../../components/ImageGallery/ImageGallery';
 import useSearchByValue from './useSearchByValue';

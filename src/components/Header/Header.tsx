@@ -5,7 +5,7 @@ import { Logout } from '@mui/icons-material';
 import PaletteIcon from '@mui/icons-material/Palette';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
-import { EDITOR_ROUTE } from '../../utils/constants/routes';
+import { EDITOR_ROUTE } from '../../constants/routes';
 import SearchBar from '../SearchBar/SearchBar';
 import { useAppDispatch } from '../../store/store';
 import { initialEditImageState, setEditImageData } from '../../store/editImageSlice';

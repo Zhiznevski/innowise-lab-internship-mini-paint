@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Tools } from '../utils/constants/tools';
+import { Tools } from '../constants/tools';
 
 const initialState = Tools.brush;
 

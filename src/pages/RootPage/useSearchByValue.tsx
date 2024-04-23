@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
-import { db } from '../../services/firebase/config';
+import { db } from '../../api/config';
 import { ImageListItemType } from '../../components/ImageGallery/ImageGallery';
 
 function useSearchByValue(collectionName: string, searchValue: string) {
