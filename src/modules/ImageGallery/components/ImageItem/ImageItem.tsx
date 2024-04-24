@@ -1,4 +1,4 @@
-import { ImageListItem, ImageListItemBar, ButtonGroup, Button } from '@mui/material';
+import { ImageListItem, ImageListItemBar, ButtonGroup, Button, Typography } from '@mui/material';
 import { ImageListItemType } from '../../../../types/types';
 
 export interface ImageListPropsType {
@@ -32,7 +32,10 @@ function ImageItem({
         loading="lazy"
         style={{ cursor: 'pointer' }}
       />
-      <ImageListItemBar title={`by: ${imageData.userName}`} position="below"></ImageListItemBar>
+      <ImageListItemBar
+        title={<Typography>by: {imageData.userName}</Typography>}
+        position="below"
+      ></ImageListItemBar>
       {isEditable && (
         <ButtonGroup
           sx={{ alignSelf: 'center' }}
