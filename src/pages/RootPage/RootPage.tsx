@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../api/config';
+import { useEffect } from 'react';
 import { LOGIN_ROUTE } from '../../constants/routes';
 import { Container } from '@mui/material';
 import { ImageGallery } from '../../modules/ImageGallery';
@@ -11,7 +12,11 @@ function RootPage() {
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
-  if (!user) navigate(LOGIN_ROUTE);
+  useEffect(() => {
+    if (!user) {
+      navigate(LOGIN_ROUTE);
+    }
+  }, [user, navigate]);
 
   if (loading) {
     return <Spinner variant="circle" />;

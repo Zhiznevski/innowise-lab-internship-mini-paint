@@ -1,4 +1,4 @@
-import { LinearProgress, useMediaQuery } from '@mui/material';
+import { LinearProgress, Typography, useMediaQuery } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import { User } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from '../../../../store/store';
@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import Modal from '../../../../ui/Modal/Modal';
 import { deleteDocument } from '../../api/deleteImageById';
 import { setEditImageData } from '../../store/editImageSlice';
+import { NO_MATCH_MESSAGE } from '../../constants/constants';
 
 interface ImageGalleryPropsType {
   user: User | null | undefined;
@@ -45,6 +46,10 @@ export function ImageGallery({ user }: ImageGalleryPropsType) {
 
   if (error) {
     toast.error('Something went wrong');
+  }
+
+  if (!searchResults.length) {
+    return <Typography>{NO_MATCH_MESSAGE}</Typography>;
   }
 
   return (
