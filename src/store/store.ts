@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import toolSlice from './toolSlice';
+import toolSlice from '../modules/ToolsPanel/store/toolSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import toolColorSlice from './toolColorSlice';
-import penSizeSlice from './penSizeSlice';
-import searchValueSlice from './searchValueSlice';
+import toolColorSlice from '../modules/ToolsPanel/store/toolColorSlice';
+import penSizeSlice from '../modules/ToolsPanel/store/penSizeSlice';
+import { searchValueReducer } from '../modules/Appbar';
 import { editImageReducer } from '../modules/ImageGallery';
 
 export const store = configureStore({
@@ -11,7 +11,7 @@ export const store = configureStore({
     tool: toolSlice,
     toolColor: toolColorSlice,
     penSize: penSizeSlice,
-    searchValue: searchValueSlice,
+    searchValue: searchValueReducer,
     editImage: editImageReducer,
   },
   middleware: (getDefaultMiddleware) =>

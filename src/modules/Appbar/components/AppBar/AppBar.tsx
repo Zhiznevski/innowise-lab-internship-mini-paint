@@ -1,28 +1,29 @@
-import { AppBar, IconButton, Toolbar } from '@mui/material';
+import { AppBar as Header, IconButton, Toolbar } from '@mui/material';
 import { User } from 'firebase/auth';
-import { logout } from '../../services/firebase/Auth.service';
+import { logout } from '../../api/logoutUser';
 import { Logout } from '@mui/icons-material';
 import PaletteIcon from '@mui/icons-material/Palette';
 import { Link as RouterLink } from 'react-router-dom';
 import { Link } from '@mui/material';
-import { EDITOR_ROUTE } from '../../constants/routes';
-import SearchBar from '../SearchBar/SearchBar';
-import { useAppDispatch } from '../../store/store';
-import { setEditImageData } from '../../modules/ImageGallery/store/editImageSlice';
+import { EDITOR_ROUTE } from '../../../../constants/routes';
+import SearchBar from '../../../../components/SearchBar/SearchBar';
+import { useAppDispatch } from '../../../../store/store';
+import { setEditImageData } from '../../../ImageGallery/store/editImageSlice';
 
 interface HeaderPropsType {
   user: User | null | undefined;
 }
 
-function Header({ user }: HeaderPropsType) {
+export function AppBar({ user }: HeaderPropsType) {
   const dispatch = useAppDispatch();
+
   const logoutHandleClick = async () => {
     await logout();
   };
 
   return (
     <>
-      <AppBar position="static" color="primary">
+      <Header position="static" color="primary">
         <Toolbar>
           {user && (
             <>
@@ -67,8 +68,7 @@ function Header({ user }: HeaderPropsType) {
             </>
           )}
         </Toolbar>
-      </AppBar>
+      </Header>
     </>
   );
 }
-export default Header;

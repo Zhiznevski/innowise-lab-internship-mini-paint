@@ -1,22 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header/Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../api/config';
-import { useEffect } from 'react';
 import { LOGIN_ROUTE } from '../../constants/routes';
 import { Container } from '@mui/material';
 import { ImageGallery } from '../../modules/ImageGallery';
 import Spinner from '../../ui/Spinner/Spinner';
+import { AppBar } from '../../modules/Appbar';
 
 function RootPage() {
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate(LOGIN_ROUTE);
-    }
-  }, [user, navigate]);
+  if (!user) navigate(LOGIN_ROUTE);
 
   if (loading) {
     return <Spinner variant="circle" />;
@@ -25,7 +20,7 @@ function RootPage() {
   return (
     <>
       <Container sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-        <Header user={user} />
+        <AppBar user={user} />
         <ImageGallery user={user} />
       </Container>
     </>

@@ -1,5 +1,5 @@
 import { signOut } from 'firebase/auth';
-import { auth } from '../../api/config';
+import { auth } from '../../../api/config';
 
 export const logout = async () => {
   try {

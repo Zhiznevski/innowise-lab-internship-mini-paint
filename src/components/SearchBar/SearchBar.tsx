@@ -1,7 +1,7 @@
 import { InputBase, alpha, styled } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { setSearchValue } from '../../store/searchValueSlice';
+import { setSearchValue } from '../../modules/Appbar';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
