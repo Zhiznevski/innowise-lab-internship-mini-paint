@@ -1,4 +1,4 @@
-# js-calculator
+# innowise-lab-internship-mini-paint
 
 
 1. **Task**:
