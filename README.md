@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# js-calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+1. **Task**:
+https://drive.google.com/file/d/19cb4whI_HUVPzuaPyaj5r6hGotIVnhho/view
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. **Deploy**:
+https://innowise-lab-internship-mini-paint.vercel.app/
 
-## Expanding the ESLint configuration
+3. **How to run the app**: 
+    1. To run it locally, just download this repo as a zip
+    2. Unzip it and run npm install in the project folder.
+    3. To start in dev mode, use npm start
+    4. To build it, use npm run build - script will create a "dist" folder with all files that you need.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+4. **Database snapshot**:
 
-- Configure the top-level `parserOptions` property like this:
+   ![Alt text](image.png)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+5. **Application stack**: 
+    - React + TypeScript + RTK - as frontend
+    - Firebase - as backend
+    - Material UI - as UI library
+    - React-hook-form and Yup for validation
+    - React-router-dom for routing
+    - Vite - as bundler
+    - Eslint + Prettier - as code styler
+    - Husky - git hooks
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+    
