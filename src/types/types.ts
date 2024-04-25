@@ -1,3 +1,5 @@
+import { User } from 'firebase/auth';
+
 export interface ImageListItemType {
   itemId: string;
   imageUrl: string;
@@ -5,4 +7,9 @@ export interface ImageListItemType {
   userName: string;
   createdAt: Date;
   storagePath: string;
+}
+
+export interface ContextType {
+  user: User | null | undefined;
+  isLoading: boolean;
 }

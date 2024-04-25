@@ -1,24 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../api/config';
-import { useEffect } from 'react';
-import { LOGIN_ROUTE } from '../../constants/routes';
 import { Container } from '@mui/material';
 import { ImageGallery } from '../../modules/ImageGallery';
 import Spinner from '../../ui/Spinner/Spinner';
 import { AppBar } from '../../modules/Appbar';
+import { useUser } from '../../hooks/useUser';
 
 function RootPage() {
-  const [user, loading] = useAuthState(auth);
-  const navigate = useNavigate();
+  const { user, isLoading } = useUser();
 
-  useEffect(() => {
-    if (!user) {
-      navigate(LOGIN_ROUTE);
-    }
-  }, [user, navigate]);
-
-  if (loading) {
+  if (isLoading) {
     return <Spinner variant="circle" />;
   }
 

@@ -1,23 +1,16 @@
 import { Container } from '@mui/material';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../api/config';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { HOME_ROUTE } from '../../constants/routes';
 import { LoginForm } from '../../modules/LoginForm';
 import Spinner from '../../ui/Spinner/Spinner';
+import { useUser } from '../../hooks/useUser';
 
 function LoginPage() {
-  const [user, loading] = useAuthState(auth);
-  const navigate = useNavigate();
+  const { user, isLoading } = useUser();
 
-  useEffect(() => {
-    if (user) {
-      navigate(HOME_ROUTE);
-    }
-  }, [user, navigate]);
+  if (user) return <Navigate to={HOME_ROUTE} />;
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner variant="circle" />;
   }
 
