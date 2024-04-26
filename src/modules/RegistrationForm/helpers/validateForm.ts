@@ -14,6 +14,7 @@ export const registerValidationSchema = yup.object().shape({
     .minNumbers(1, 'Password must have at least 1 digit')
     .minLowercase(1, 'Password must have at least 1 lowercase')
     .minUppercase(1, 'Password must have at least 1 uppercase')
+    .minSymbols(1, 'Password must have at least 1 special symbol(%,&,@ etc)')
     .required('Enter a password'),
 });
 

@@ -14,7 +14,6 @@ export function RegistrationForm() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver<RegisterValidationSchemaType>(registerValidationSchema),
-    mode: 'onBlur',
   });
 
   const notify = () => {
