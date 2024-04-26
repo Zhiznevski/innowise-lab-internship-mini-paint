@@ -16,6 +16,7 @@ const modalStyle = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  width: 500,
 };
 
 function Modal({ isOpen, onClose, children }: ModalPropsType) {
