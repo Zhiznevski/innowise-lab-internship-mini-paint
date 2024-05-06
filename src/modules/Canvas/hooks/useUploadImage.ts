@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { storage, db } from '../../../api/config';
 import { User } from 'firebase/auth';
 import { ImageListItemType } from '../../../types/types';
+import { useAppDispatch } from '../../../store/store';
+import { setEditImageData } from '../../ImageGallery/store/editImageSlice';
 
 function useUploadImage(
   canvasRef: React.RefObject<HTMLCanvasElement>,
@@ -13,6 +15,7 @@ function useUploadImage(
 ) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
+  const dispatch = useAppDispatch();
   const uploadImage = async () => {
     try {
       setIsLoading(true);
@@ -29,6 +32,17 @@ function useUploadImage(
           userName: user?.displayName,
           userEmail: user?.email,
           storagePath: `images/${id}.png`,
+        }).then((res) => {
+          dispatch(
+            setEditImageData({
+              itemId: res.id,
+              userEmail: user?.email ?? '',
+              userName: user?.displayName ?? '',
+              imageUrl: downloadURL,
+              createdAt: new Date(),
+              storagePath: `images/${id}.png`,
+            })
+          );
         });
       } else {
         await updateDoc(doc(db, 'images', listItem.itemId), {
